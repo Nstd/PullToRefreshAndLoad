@@ -16,6 +16,8 @@ import com.jingchen.pulltorefresh.MyAdapter;
 import com.jingchen.pulltorefresh.MyListener;
 import com.jingchen.pulltorefresh.PullToRefreshLayout;
 import com.jingchen.pulltorefresh.R;
+import com.jingchen.pulltorefresh.helper.SimpleLoadMoreViewHelper;
+import com.jingchen.pulltorefresh.helper.SimpleRefreshViewHelper;
 
 public class PullableListViewActivity extends Activity
 {
@@ -30,6 +32,8 @@ public class PullableListViewActivity extends Activity
 		setContentView(R.layout.activity_listview);
 		ptrl = ((PullToRefreshLayout) findViewById(R.id.refresh_view));
 		ptrl.setOnRefreshListener(new MyListener());
+		ptrl.setOnLoadMoreViewStatusChangedListener(new SimpleLoadMoreViewHelper(this, R.id.list_view_load_more));
+		ptrl.setOnRefreshViewStatusChangedListener(new SimpleRefreshViewHelper(this, R.id.list_view_refresh_head));
 		listView = (ListView) findViewById(R.id.content_view);
 		initListView();
 	}

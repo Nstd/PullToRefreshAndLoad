@@ -12,7 +12,8 @@ local.properties
 
 #no use
 import-summary.txt
-.idea/*
-build/*
+.idea
+build
 *.iml
 *.gradle
+app/build
