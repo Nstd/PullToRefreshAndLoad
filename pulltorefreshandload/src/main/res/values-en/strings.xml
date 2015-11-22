@@ -1,0 +1,12 @@
+<resources>
+    <string name="pull_to_refresh">Drop down</string>
+    <string name="release_to_refresh">Release to refresh</string>
+    <string name="refreshing">Refreshing...</string>
+    <string name="refresh_succeed">Refresh succeed</string>
+    <string name="refresh_fail">Refresh failed</string>
+    <string name="pullup_to_load">Pull up</string>
+    <string name="release_to_load">Release to load</string>
+    <string name="loading">Loading...</string>
+    <string name="load_succeed">Load succeed</string>
+    <string name="load_fail">Load failed</string>
+</resources>
