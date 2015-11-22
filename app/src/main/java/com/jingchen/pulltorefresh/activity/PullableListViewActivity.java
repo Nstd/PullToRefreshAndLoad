@@ -14,10 +14,13 @@ import android.widget.Toast;
 
 import com.jingchen.pulltorefresh.MyAdapter;
 import com.jingchen.pulltorefresh.MyListener;
-import com.jingchen.pulltorefresh.PullToRefreshLayout;
 import com.jingchen.pulltorefresh.R;
-import com.jingchen.pulltorefresh.helper.SimpleLoadMoreViewHelper;
-import com.jingchen.pulltorefresh.helper.SimpleRefreshViewHelper;
+import com.jingchen.pulltorefreshandload.DefaultPullToRefreshLayout;
+import com.jingchen.pulltorefreshandload.PullToRefreshLayout;
+import com.jingchen.pulltorefreshandload.helper.DefaultLoadMoreViewHelper;
+import com.jingchen.pulltorefreshandload.helper.DefaultRefreshViewHelper;
+import com.jingchen.pulltorefreshandload.helper.SimpleLoadMoreViewHelper;
+import com.jingchen.pulltorefreshandload.helper.SimpleRefreshViewHelper;
 
 public class PullableListViewActivity extends Activity
 {
@@ -32,8 +35,8 @@ public class PullableListViewActivity extends Activity
 		setContentView(R.layout.activity_listview);
 		ptrl = ((PullToRefreshLayout) findViewById(R.id.refresh_view));
 		ptrl.setOnRefreshListener(new MyListener());
-		ptrl.setOnLoadMoreViewStatusChangedListener(new SimpleLoadMoreViewHelper(this, R.id.list_view_load_more));
-		ptrl.setOnRefreshViewStatusChangedListener(new SimpleRefreshViewHelper(this, R.id.list_view_refresh_head));
+//		ptrl.setOnRefreshViewStatusChangedListener(new DefaultRefreshViewHelper(this, findViewById(R.id.list_view_refresh_head)));
+//		ptrl.setOnLoadMoreViewStatusChangedListener(new DefaultLoadMoreViewHelper(this, findViewById(R.id.list_view_load_more)));
 		listView = (ListView) findViewById(R.id.content_view);
 		initListView();
 	}

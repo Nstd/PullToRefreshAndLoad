@@ -14,8 +14,8 @@ import android.widget.Toast;
 
 import com.jingchen.pulltorefresh.MyAdapter;
 import com.jingchen.pulltorefresh.MyListener;
-import com.jingchen.pulltorefresh.PullToRefreshLayout;
 import com.jingchen.pulltorefresh.R;
+import com.jingchen.pulltorefreshandload.PullToRefreshLayout;
 
 public class PullableGridViewActivity extends Activity
 {

@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/getsource"
@@ -61,17 +62,17 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <com.jingchen.pulltorefresh.PullToRefreshLayout
+    <com.jingchen.pulltorefreshandload.DefaultPullToRefreshLayout
         android:id="@+id/refresh_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/tablayout"
-        android:layout_below="@id/getsource" >
+        android:layout_below="@id/getsource">
 
-        <include layout="@layout/refresh_head" />
+        <include layout="@layout/pull_to_refresh_footer" />
         <!-- 支持所有实现Pullable接口的View -->
 
-        <com.jingchen.pulltorefresh.pullableview.PullableListView
+        <com.jingchen.pulltorefreshandload.pullableview.PullableListView
             android:id="@+id/content_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -79,7 +80,7 @@
             android:divider="@color/gray"
             android:dividerHeight="1dp" />
 
-        <include layout="@layout/load_more" />
-    </com.jingchen.pulltorefresh.PullToRefreshLayout>
+        <include layout="@layout/pull_to_refresh_header" />
+    </com.jingchen.pulltorefreshandload.DefaultPullToRefreshLayout>
 
 </RelativeLayout>

@@ -3,9 +3,10 @@ package com.jingchen.pulltorefresh;
 import android.os.Handler;
 import android.os.Message;
 
-import com.jingchen.pulltorefresh.PullToRefreshLayout.OnRefreshListener;
+import com.jingchen.pulltorefreshandload.PullToRefreshLayout;
 
-public class MyListener implements OnRefreshListener
+
+public class MyListener implements PullToRefreshLayout.OnRefreshListener
 {
 
 	@Override

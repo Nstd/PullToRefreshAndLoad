@@ -1,8 +1,8 @@
 package com.jingchen.pulltorefresh.activity;
 
 import com.jingchen.pulltorefresh.MyListener;
-import com.jingchen.pulltorefresh.PullToRefreshLayout;
 import com.jingchen.pulltorefresh.R;
+import com.jingchen.pulltorefreshandload.PullToRefreshLayout;
 
 import android.app.Activity;
 import android.os.Bundle;

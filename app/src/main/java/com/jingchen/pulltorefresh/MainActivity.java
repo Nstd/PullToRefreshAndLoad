@@ -20,6 +20,7 @@ import com.jingchen.pulltorefresh.activity.PullableListViewActivity;
 import com.jingchen.pulltorefresh.activity.PullableScrollViewActivity;
 import com.jingchen.pulltorefresh.activity.PullableTextViewActivity;
 import com.jingchen.pulltorefresh.activity.PullableWebViewActivity;
+import com.jingchen.pulltorefreshandload.PullToRefreshLayout;
 
 /**
  * 更多详解见博客http://blog.csdn.net/zhongkejingwang/article/details/38868463
