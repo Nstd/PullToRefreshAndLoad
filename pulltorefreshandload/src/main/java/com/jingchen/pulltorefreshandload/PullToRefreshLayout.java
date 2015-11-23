@@ -611,23 +611,53 @@ public class PullToRefreshLayout extends RelativeLayout
 			isLayout = true;
 			initView();
 		}
+
 		Log.e(TAG, "canUserPullDown=" + canUserPullDown + " refreshView not null=" + (refreshView != null)
 			+ " canUserPullUp=" + canUserPullUp + " loadMoreView not null=" + (loadmoreView != null));
 		// 改变子控件的布局，这里直接用(pullDownY + pullUpY)作为偏移量，这样就可以不对当前状态作区分
+		MarginLayoutParams lp;
+		int childLeft, childTop;
+		int pullableMarginBottom = 0;
 		if (canUserPullDown) {
-			refreshView.layout(0,
+			lp = (MarginLayoutParams) refreshView.getLayoutParams();
+			childLeft = getPaddingLeft() + lp.leftMargin;
+//			Log.e(TAG, "headerView: parentLeft=" + l + " parentPaddingLeft=" + getPaddingLeft() + " selfMarginLeft=" + lp.leftMargin);
+			refreshView.layout(childLeft,
 					(int) (pullDownY + pullUpY) - refreshView.getMeasuredHeight(),
-					refreshView.getMeasuredWidth(), (int) (pullDownY + pullUpY));
+					childLeft + refreshView.getMeasuredWidth(),
+					(int) (pullDownY + pullUpY));
+		} else {
+			Log.e(TAG, "no headView");
 		}
-		pullableView.layout(0, (int) (pullDownY + pullUpY),
-				pullableView.getMeasuredWidth(), (int) (pullDownY + pullUpY)
-						+ pullableView.getMeasuredHeight());
+		if(pullableView != null) {
+			lp = (MarginLayoutParams) pullableView.getLayoutParams();
+			childLeft = getPaddingLeft() + lp.leftMargin;
+			childTop = getPaddingTop() + lp.topMargin;
+			pullableMarginBottom = lp.bottomMargin;
+//			Log.e(TAG, "pullableView: parentLeft=" + l + " parentPaddingLeft=" + getPaddingLeft() + " selfMarginLeft=" + lp.leftMargin
+//					+ " selfMarginRight=" + lp.rightMargin + " selfMarginTop=" + lp.topMargin + " selfMarginBottom=" + lp.bottomMargin
+//					+ " selfWidth=" + pullableView.getMeasuredWidth() + " selfHeight=" + pullableView.getMeasuredHeight());
+//			Log.e(TAG, "pullableView: childLeft=" + childLeft + " childTop=" + childTop
+//					+ " childBottom1=" + ((int) (pullDownY + pullUpY) + pullableView.getMeasuredHeight())
+//					+ " childBottom2=" + (childTop + (int) (pullDownY + pullUpY) + pullableView.getMeasuredHeight()));
+			pullableView.layout(childLeft,
+					childTop + (int) (pullDownY + pullUpY),
+					childLeft + pullableView.getMeasuredWidth(),
+					childTop + (int) (pullDownY + pullUpY) + pullableView.getMeasuredHeight());
+		} else {
+			Log.e(TAG, "no pullableView");
+		}
 		if (canUserPullUp) {
-			loadmoreView.layout(0,
-					(int) (pullDownY + pullUpY) + pullableView.getMeasuredHeight(),
-					loadmoreView.getMeasuredWidth(),
-					(int) (pullDownY + pullUpY) + pullableView.getMeasuredHeight()
+			lp = (MarginLayoutParams) loadmoreView.getLayoutParams();
+			childLeft = getPaddingLeft() + lp.leftMargin;
+//			Log.e(TAG, "footerView: parentLeft=" + l + " parentPaddingLeft=" + getPaddingLeft() + " selfMarginLeft=" + lp.leftMargin);
+			loadmoreView.layout(childLeft,
+					(int) (pullDownY + pullUpY) + pullableView.getMeasuredHeight() + pullableMarginBottom,
+					childLeft + loadmoreView.getMeasuredWidth(),
+					(int) (pullDownY + pullUpY) + pullableView.getMeasuredHeight() + pullableMarginBottom
 							+ loadmoreView.getMeasuredHeight());
+		} else {
+			Log.e(TAG, "no footerView");
 		}
 	}
 

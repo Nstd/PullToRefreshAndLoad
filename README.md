@@ -145,6 +145,11 @@ compile 'com.jingchen:pulltorefreshandload:3.1@aar'
          * 下拉刷新失败
          */
         void onRefreshFailed(PullToRefreshLayout pullToRefreshLayout);
+
+        /**
+         * 没有更多数据
+         */
+        void onNoMoreData(PullToRefreshLayout pullToRefreshLayout);
     }
     ```
 
