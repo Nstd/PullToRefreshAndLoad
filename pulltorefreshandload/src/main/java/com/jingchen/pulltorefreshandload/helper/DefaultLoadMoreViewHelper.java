@@ -1,10 +1,6 @@
 package com.jingchen.pulltorefreshandload.helper;
 
-import android.app.Activity;
 import android.content.Context;
-import android.text.Layout;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
@@ -101,5 +97,13 @@ public class DefaultLoadMoreViewHelper extends SimpleLoadMoreViewHelper {
         loadStateImageView.setVisibility(View.VISIBLE);
         loadStateTextView.setText(R.string.load_fail);
         loadStateImageView.setBackgroundResource(R.drawable.load_failed);
+    }
+
+    @Override
+    public void onNoMoreData(PullToRefreshLayout pullToRefreshLayout) {
+        loadingView.clearAnimation();
+        loadingView.setVisibility(View.GONE);
+        loadStateImageView.setVisibility(View.GONE);
+        loadStateTextView.setText(R.string.refresh_no_more_data);
     }
 }

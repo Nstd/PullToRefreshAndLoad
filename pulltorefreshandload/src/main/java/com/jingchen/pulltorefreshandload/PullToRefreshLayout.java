@@ -51,6 +51,8 @@ public class PullToRefreshLayout extends RelativeLayout
 	public static final int SUCCEED = 0;
 	// 刷新失败
 	public static final int FAIL = 1;
+	// 没有数据了
+	public static final int NO_MORE_DATA = 2;
 	// 按下Y坐标，上一个事件点Y坐标
 	private float downY, lastY;
 
@@ -219,6 +221,10 @@ public class PullToRefreshLayout extends RelativeLayout
 			// 刷新成功
 			if(mRefreshViewChangedListener != null) mRefreshViewChangedListener.onRefreshSuccess(this);
 			break;
+		case NO_MORE_DATA:
+			//没有更多数据了
+			if(mRefreshViewChangedListener != null) mRefreshViewChangedListener.onNoMoreData(this);
+			break;
 		case FAIL:
 		default:
 			// 刷新失败
@@ -252,6 +258,10 @@ public class PullToRefreshLayout extends RelativeLayout
 		case SUCCEED:
 			// 加载成功
 			if(mLoadMoreViewChangedListener != null) mLoadMoreViewChangedListener.onLoadMoreSuccess(this);
+			break;
+		case NO_MORE_DATA:
+			//没有更多数据了
+			if(mLoadMoreViewChangedListener != null) mLoadMoreViewChangedListener.onNoMoreData(this);
 			break;
 		case FAIL:
 		default:
@@ -727,6 +737,11 @@ public class PullToRefreshLayout extends RelativeLayout
 		 * 下拉刷新失败
 		 */
 		void onRefreshFailed(PullToRefreshLayout pullToRefreshLayout);
+
+		/**
+		 * 没有更多数据了
+		 */
+		void onNoMoreData(PullToRefreshLayout pullToRefreshLayout);
 	}
 
 	/**
@@ -761,5 +776,10 @@ public class PullToRefreshLayout extends RelativeLayout
 		 * 上拉刷新失败
 		 */
 		void onLoadMoreFailed(PullToRefreshLayout pullToRefreshLayout);
+
+		/**
+		 * 没有更多数据了
+		 */
+		void onNoMoreData(PullToRefreshLayout pullToRefreshLayout);
 	}
 }

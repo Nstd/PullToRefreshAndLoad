@@ -39,4 +39,7 @@ public class SimpleLoadMoreViewHelper implements PullToRefreshLayout.OnLoadMoreV
 
     @Override
     public void onLoadMoreFailed(PullToRefreshLayout pullToRefreshLayout) {}
+
+    @Override
+    public void onNoMoreData(PullToRefreshLayout pullToRefreshLayout) {}
 }

@@ -1,7 +1,6 @@
 package com.jingchen.pulltorefreshandload.helper;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
@@ -101,5 +100,13 @@ public class DefaultRefreshViewHelper extends SimpleRefreshViewHelper {
         refreshStateTextView.setText(R.string.refresh_fail);
         refreshStateImageView
                 .setBackgroundResource(R.drawable.refresh_failed);
+    }
+
+    @Override
+    public void onNoMoreData(PullToRefreshLayout pullToRefreshLayout) {
+        refreshingView.clearAnimation();
+        refreshingView.setVisibility(View.GONE);
+        refreshStateImageView.setVisibility(View.GONE);
+        refreshStateTextView.setText(R.string.refresh_no_more_data);
     }
 }

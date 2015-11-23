@@ -40,4 +40,7 @@ public class SimpleRefreshViewHelper implements PullToRefreshLayout.OnRefreshVie
 
     @Override
     public void onRefreshFailed(PullToRefreshLayout pullToRefreshLayout) {}
+
+    @Override
+    public void onNoMoreData(PullToRefreshLayout pullToRefreshLayout) {}
 }
