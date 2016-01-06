@@ -6,6 +6,7 @@ import android.webkit.WebView;
 
 public class PullableWebView extends WebView implements Pullable
 {
+	public PullableConfig pullableConfig = new PullableConfig();
 
 	public PullableWebView(Context context)
 	{
@@ -25,6 +26,11 @@ public class PullableWebView extends WebView implements Pullable
 	@Override
 	public boolean canPullDown()
 	{
+		if(!pullableConfig.canUserPullDown())
+		{
+			return false;
+		}
+
 		if (getScrollY() == 0)
 			return true;
 		else
@@ -34,6 +40,10 @@ public class PullableWebView extends WebView implements Pullable
 	@Override
 	public boolean canPullUp()
 	{
+		if(!pullableConfig.canUserPullUp()) {
+			return false;
+		}
+
 		if (getScrollY() >= getContentHeight() * getScale()
 				- getMeasuredHeight())
 			return true;

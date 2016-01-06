@@ -7,6 +7,8 @@ import android.widget.ListView;
 public class PullableListView extends ListView implements Pullable
 {
 
+	public PullableConfig pullableConfig = new PullableConfig();
+
 	public PullableListView(Context context)
 	{
 		super(context);
@@ -25,6 +27,11 @@ public class PullableListView extends ListView implements Pullable
 	@Override
 	public boolean canPullDown()
 	{
+		if(!pullableConfig.canUserPullDown())
+		{
+			return false;
+		}
+
 		if (getCount() == 0)
 		{
 			// 没有item的时候也可以下拉刷新
@@ -41,6 +48,10 @@ public class PullableListView extends ListView implements Pullable
 	@Override
 	public boolean canPullUp()
 	{
+		if(!pullableConfig.canUserPullUp()) {
+			return false;
+		}
+
 		if (getCount() == 0)
 		{
 			// 没有item的时候也可以上拉加载

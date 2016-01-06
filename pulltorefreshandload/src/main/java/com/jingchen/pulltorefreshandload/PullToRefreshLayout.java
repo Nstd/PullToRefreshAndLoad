@@ -1,6 +1,7 @@
 package com.jingchen.pulltorefreshandload;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
@@ -93,6 +94,13 @@ public class PullToRefreshLayout extends RelativeLayout
 	private boolean canUserPullUp = true;
 	protected Context mContext;
 	private int mFinishedViewRemainTimeInMillisecond = DEFAUTL_REFRESH_FINISHED_VIEW_REMAIN_TIME_IN_MILLISECOND;
+
+
+	// 包裹PullableView的父view
+	private View containerView;
+	private boolean isAutoDetect;
+	private boolean hasHeader;
+	private boolean hasFooter;
 
 	/**
 	 * 执行自动回滚的handler
@@ -199,6 +207,11 @@ public class PullToRefreshLayout extends RelativeLayout
 	{
 		mContext = context;
 		timer = new MyTimer(updateHandler);
+
+		TypedArray t = getContext().obtainStyledAttributes(attrs, R.styleable.PullToRefreshLayout);
+		isAutoDetect = t.getBoolean(R.styleable.PullToRefreshLayout_autoDetect, true);
+		hasHeader = t.getBoolean(R.styleable.PullToRefreshLayout_hasHeader, false) || isAutoDetect;
+		hasFooter = t.getBoolean(R.styleable.PullToRefreshLayout_hasFooter, false) || isAutoDetect;
 	}
 
 	private void hide()
@@ -564,47 +577,63 @@ public class PullToRefreshLayout extends RelativeLayout
 	@Override
 	protected void onLayout(boolean changed, int l, int t, int r, int b)
 	{
-		Log.d("Test", "Test");
 		if (!isLayout)
 		{
 			// 这里是第一次进来的时候做一些初始化
-			int idx = 0, count = getChildCount();
-			View v = getChildAt(0);
-			if(!(v instanceof Pullable)) {
-				// 有下拉头
-				refreshView = v;
-				refreshDist = ((ViewGroup) refreshView).getChildAt(0)
-						.getMeasuredHeight();
-				canUserPullDown = true;
-				onRefreshViewGetted(refreshView);
-			} else {
-				canUserPullDown = false;
-				pullableView = v;
-			}
-
-			if(count > 1) {
-				v = getChildAt(1);
-				if(!(v instanceof Pullable)) {
-					// 没有下拉头，但是有上拉头
-					loadmoreView = v;
-					loadmoreDist = ((ViewGroup) loadmoreView).getChildAt(0)
-							.getMeasuredHeight();
-					canUserPullUp = true;
-					onLoadMoreViewGetted(loadmoreView);
+			int count = getChildCount();
+			if(isAutoDetect) {
+				View v = getChildAt(0);
+				if (!(v instanceof Pullable)) {
+					// 有下拉头
+					initRefreshView(v);
 				} else {
-					canUserPullUp = false;
+					canUserPullDown = false;
 					pullableView = v;
+				}
 
-					if(count == 3 && pullableView != null) {
-						// 有下拉头，也有上拉头
-						loadmoreView = getChildAt(2);
-						loadmoreDist = ((ViewGroup) loadmoreView).getChildAt(0)
-								.getMeasuredHeight();
-						canUserPullUp = true;
-						onLoadMoreViewGetted(loadmoreView);
+				if (count > 1) {
+					v = getChildAt(1);
+					if (!(v instanceof Pullable)) {
+						// 没有下拉头，但是有上拉头
+						initLoadmoreView(v);
 					} else {
 						canUserPullUp = false;
+						pullableView = v;
+
+						if (count == 3 && pullableView != null) {
+							// 有下拉头，也有上拉头
+							initLoadmoreView(getChildAt(2));
+						} else {
+							canUserPullUp = false;
+						}
 					}
+				}
+			} else {
+				int idx = 0;
+				View v = getChildAt(idx);
+				if(hasHeader) {
+					initRefreshView(v);
+					v = getChildAt(++idx);
+				} else {
+					canUserPullDown = false;
+				}
+
+				containerView = v;
+
+				ViewGroup container = (ViewGroup) containerView;
+				int containerSize = container.getChildCount();
+				pullableView = null;
+				for(int i=0; i<containerSize; i++) {
+					if(container.getChildAt(i) instanceof Pullable) {
+						pullableView = container.getChildAt(i);
+						break;
+					}
+				}
+
+				if(hasFooter) {
+					initLoadmoreView(getChildAt(++idx));
+				} else {
+					canUserPullUp = false;
 				}
 			}
 
@@ -612,13 +641,13 @@ public class PullToRefreshLayout extends RelativeLayout
 			initView();
 		}
 
-		Log.e(TAG, "canUserPullDown=" + canUserPullDown + " refreshView not null=" + (refreshView != null)
-			+ " canUserPullUp=" + canUserPullUp + " loadMoreView not null=" + (loadmoreView != null));
+//		Log.e(TAG, "canUserPullDown=" + canUserPullDown + " refreshView not null=" + (refreshView != null)
+//			+ " canUserPullUp=" + canUserPullUp + " loadMoreView not null=" + (loadmoreView != null));
 		// 改变子控件的布局，这里直接用(pullDownY + pullUpY)作为偏移量，这样就可以不对当前状态作区分
 		MarginLayoutParams lp;
 		int childLeft, childTop;
 		int pullableMarginBottom = 0;
-		if (canUserPullDown) {
+		if (canUserPullDown && hasHeader) {
 			lp = (MarginLayoutParams) refreshView.getLayoutParams();
 			childLeft = getPaddingLeft() + lp.leftMargin;
 //			Log.e(TAG, "headerView: parentLeft=" + l + " parentPaddingLeft=" + getPaddingLeft() + " selfMarginLeft=" + lp.leftMargin);
@@ -629,7 +658,19 @@ public class PullToRefreshLayout extends RelativeLayout
 		} else {
 			Log.e(TAG, "no headView");
 		}
-		if(pullableView != null) {
+
+		if(containerView != null) {
+			lp = (MarginLayoutParams) containerView.getLayoutParams();
+			childLeft = getPaddingLeft() + lp.leftMargin;
+			childTop = getPaddingTop() + lp.topMargin;
+			containerView.layout(childLeft,
+					childTop + (int) (pullDownY + pullUpY),
+					childLeft + containerView.getMeasuredWidth(),
+					childTop + (int) (pullDownY + pullUpY) + containerView.getMeasuredHeight());
+
+		}
+
+		if(containerView == null && pullableView != null) {
 			lp = (MarginLayoutParams) pullableView.getLayoutParams();
 			childLeft = getPaddingLeft() + lp.leftMargin;
 			childTop = getPaddingTop() + lp.topMargin;
@@ -647,18 +688,41 @@ public class PullToRefreshLayout extends RelativeLayout
 		} else {
 			Log.e(TAG, "no pullableView");
 		}
-		if (canUserPullUp) {
+
+
+		View cView = containerView == null ? pullableView : containerView;
+		if (canUserPullUp && hasFooter) {
 			lp = (MarginLayoutParams) loadmoreView.getLayoutParams();
 			childLeft = getPaddingLeft() + lp.leftMargin;
 //			Log.e(TAG, "footerView: parentLeft=" + l + " parentPaddingLeft=" + getPaddingLeft() + " selfMarginLeft=" + lp.leftMargin);
 			loadmoreView.layout(childLeft,
-					(int) (pullDownY + pullUpY) + pullableView.getMeasuredHeight() + pullableMarginBottom,
+					(int) (pullDownY + pullUpY) + cView.getMeasuredHeight() + pullableMarginBottom,
 					childLeft + loadmoreView.getMeasuredWidth(),
-					(int) (pullDownY + pullUpY) + pullableView.getMeasuredHeight() + pullableMarginBottom
+					(int) (pullDownY + pullUpY) + cView.getMeasuredHeight() + pullableMarginBottom
 							+ loadmoreView.getMeasuredHeight());
 		} else {
 			Log.e(TAG, "no footerView");
 		}
+	}
+
+	private void initRefreshView(View v) {
+		refreshView = v;
+		refreshDist = ((ViewGroup) refreshView).getChildAt(0)
+				.getMeasuredHeight();
+		canUserPullDown = true;
+		onRefreshViewGetted(refreshView);
+	}
+
+	private void initLoadmoreView(View v) {
+		loadmoreView = v;
+		loadmoreDist = ((ViewGroup) loadmoreView).getChildAt(0)
+				.getMeasuredHeight();
+		canUserPullUp = true;
+		onLoadMoreViewGetted(loadmoreView);
+	}
+
+	public void reLayout() {
+		isLayout = false;
 	}
 
 	protected void onRefreshViewGetted(View refreshView) {}

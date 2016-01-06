@@ -1,24 +1,53 @@
-<com.jingchen.pulltorefreshandload.DefaultPullToRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/refresh_view"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/gray">
-
-    <include android:id="@+id/list_view_refresh_head" layout="@layout/pull_to_refresh_footer" />
-    <!-- 支持所有实现Pullable接口的View -->
-
-    <com.jingchen.pulltorefreshandload.pullableview.PullableListView
-        android:id="@+id/content_view"
+    android:layout_height="match_parent" >
+    <Button
+        android:id="@+id/btn_changer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="显示/隐藏"
+        android:textSize="20dp"/>
+    <com.jingchen.pulltorefreshandload.DefaultPullToRefreshLayout
+        android:id="@+id/refresh_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:divider="@color/gray"
-        android:dividerHeight="1dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"/>
+        android:background="@color/black"
+        android:layout_below="@+id/btn_changer"
+        app:autoDetect="false"
+        app:hasHeader="true"
+        app:hasFooter="true"
+        >
 
-    <include android:id="@+id/list_view_load_more" layout="@layout/pull_to_refresh_header" />
+        <include android:id="@+id/list_view_refresh_head" layout="@layout/pull_to_refresh_footer" />
+        <!-- 支持所有实现Pullable接口的View -->
 
-</com.jingchen.pulltorefreshandload.DefaultPullToRefreshLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.jingchen.pulltorefreshandload.pullableview.PullableListView
+                android:id="@+id/content_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:divider="@color/gray"
+                android:dividerHeight="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"/>
+            <TextView
+                android:id="@+id/tv_no_data_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="没有数据"
+                android:textSize="20dp"
+                android:visibility="gone"
+                />
+        </LinearLayout>
+        <include android:id="@+id/list_view_load_more" layout="@layout/pull_to_refresh_header" />
+    </com.jingchen.pulltorefreshandload.DefaultPullToRefreshLayout>
+</RelativeLayout>

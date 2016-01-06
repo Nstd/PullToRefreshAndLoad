@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="@string/pullup_to_load"
-                android:textColor="@color/black"
+                android:textColor="@color/gray"
                 android:textSize="16sp" />
 
             <ImageView

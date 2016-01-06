@@ -28,6 +28,8 @@ Nstd 补充说明：
 ![ImageView](https://github.com/Nstd/PullToRefreshAndLoad/blob/master/screenshots/ImageView.gif)
 ###TextView:
 ![TextView](https://github.com/Nstd/PullToRefreshAndLoad/blob/master/screenshots/TextView.gif)
+###ListView With Container
+![ListView With Container](https://github.com/Nstd/PullToRefreshAndLoad/blob/master/screenshots/ListViewWithContainer.gif)
 
 ##引用
 ###Gradle
@@ -161,8 +163,16 @@ compile 'com.jingchen:pulltorefreshandload:3.1@aar'
         3. DefaultLoadMoreViewHelper实现了一个默认的上拉样式
            对应的layout是：pull_to_refresh_footer
 
+- 更新说明
+### v3.1.4
+    1. xml中增加autoDetect(boolean, default:true)、hasHeader(boolean, deafult:false)、hasFooter(boolean, default:false)属性
+        autoDetect默认为true，可以自动侦测[Header]-PullableView-[Footer]结构的布局
+        如果autoDetect=false，需要设置hasHeader、hasFooter属性，来指明是否有刷新头部以及尾部，同时还能添加形如以下的结构：
+        [Header]-{Container(LinearLayout、Relativelayout...){PullableView(必须是第一个孩子节点)-[OtherView]}}-[Footer]
+    2. 所有默认的PullableView中添加pullableConfig属性，可以手动设置是否可以上下拉
+    
 ##用法
-### XML
+### XML(auto detect header and footer)
 ``` xml
 <com.jingchen.pulltorefreshandload.DefaultPullToRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -180,6 +190,48 @@ compile 'com.jingchen:pulltorefreshandload:3.1@aar'
         android:background="@color/white"
         android:divider="@color/gray"
         android:dividerHeight="1dp" />
+
+    <include layout="@layout/load_more" />
+
+</com.jingchen.pulltorefreshandload.DefaultPullToRefreshLayout>
+```
+
+### XML(pullable container)
+``` xml
+<com.jingchen.pulltorefreshandload.DefaultPullToRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/refresh_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:autoDetect="false"
+    app:hasHeader="true"
+    app:hasFooter="true"
+    >
+
+    <include layout="@layout/refresh_head" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <!-- 支持所有实现Pullable接口的View -->
+        <com.jingchen.pulltorefreshandload.pullableview.PullableListView
+            android:id="@+id/content_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:divider="@color/gray"
+            android:dividerHeight="1dp" />
+        <TextView
+            android:id="@+id/tv_no_data_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No Data"
+            android:textSize="20dp"
+            android:visibility="gone"
+            />
+    </LinearLayout>
 
     <include layout="@layout/load_more" />
 

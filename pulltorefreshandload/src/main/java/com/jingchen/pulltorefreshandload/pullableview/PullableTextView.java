@@ -8,6 +8,8 @@ import android.widget.TextView;
 public class PullableTextView extends TextView implements Pullable
 {
 
+	public PullableConfig pullableConfig = new PullableConfig();
+
 	public PullableTextView(Context context)
 	{
 		super(context);
@@ -26,13 +28,13 @@ public class PullableTextView extends TextView implements Pullable
 	@Override
 	public boolean canPullDown()
 	{
-		return true;
+		return pullableConfig.canUserPullDown();
 	}
 
 	@Override
 	public boolean canPullUp()
 	{
-		return true;
+		return  pullableConfig.canUserPullUp();
 	}
 
 }

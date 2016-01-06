@@ -7,6 +7,8 @@ import android.widget.ScrollView;
 public class PullableScrollView extends ScrollView implements Pullable
 {
 
+	public PullableConfig pullableConfig = new PullableConfig();
+
 	public PullableScrollView(Context context)
 	{
 		super(context);
@@ -25,6 +27,11 @@ public class PullableScrollView extends ScrollView implements Pullable
 	@Override
 	public boolean canPullDown()
 	{
+		if(!pullableConfig.canUserPullDown())
+		{
+			return false;
+		}
+
 		if (getScrollY() == 0)
 			return true;
 		else
@@ -34,6 +41,10 @@ public class PullableScrollView extends ScrollView implements Pullable
 	@Override
 	public boolean canPullUp()
 	{
+		if(!pullableConfig.canUserPullUp()) {
+			return false;
+		}
+
 		if (getScrollY() >= (getChildAt(0).getHeight() - getMeasuredHeight()))
 			return true;
 		else

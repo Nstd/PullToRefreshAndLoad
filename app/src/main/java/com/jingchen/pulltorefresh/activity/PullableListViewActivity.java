@@ -9,7 +9,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jingchen.pulltorefresh.MyAdapter;
@@ -21,12 +23,17 @@ import com.jingchen.pulltorefreshandload.helper.DefaultLoadMoreViewHelper;
 import com.jingchen.pulltorefreshandload.helper.DefaultRefreshViewHelper;
 import com.jingchen.pulltorefreshandload.helper.SimpleLoadMoreViewHelper;
 import com.jingchen.pulltorefreshandload.helper.SimpleRefreshViewHelper;
+import com.jingchen.pulltorefreshandload.pullableview.PullableListView;
 
 public class PullableListViewActivity extends Activity
 {
 	private ListView listView;
 	private PullToRefreshLayout ptrl;
 	private boolean isFirstIn = true;
+	private TextView tvTips;
+	private Button btnChanger;
+
+	boolean isShowList = true;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -38,6 +45,23 @@ public class PullableListViewActivity extends Activity
 //		ptrl.setOnRefreshViewStatusChangedListener(new DefaultRefreshViewHelper(this, findViewById(R.id.list_view_refresh_head)));
 //		ptrl.setOnLoadMoreViewStatusChangedListener(new DefaultLoadMoreViewHelper(this, findViewById(R.id.list_view_load_more)));
 		listView = (ListView) findViewById(R.id.content_view);
+		tvTips = (TextView) findViewById(R.id.tv_no_data_label);
+		btnChanger = (Button) findViewById(R.id.btn_changer);
+		btnChanger.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				isShowList = !isShowList;
+				if(isShowList) {
+					listView.setVisibility(View.VISIBLE);
+					tvTips.setVisibility(View.GONE);
+					((PullableListView) listView).pullableConfig.enablePull();
+				} else {
+					listView.setVisibility(View.GONE);
+					tvTips.setVisibility(View.VISIBLE);
+					((PullableListView) listView).pullableConfig.disablePullUp();
+				}
+			}
+		});
 		initListView();
 	}
 

@@ -7,6 +7,7 @@ import android.widget.ImageView;
 
 public class PullableImageView extends ImageView implements Pullable
 {
+	public PullableConfig pullableConfig = new PullableConfig();
 
 	public PullableImageView(Context context)
 	{
@@ -26,13 +27,13 @@ public class PullableImageView extends ImageView implements Pullable
 	@Override
 	public boolean canPullDown()
 	{
-		return true;
+		return pullableConfig.canUserPullDown();
 	}
 
 	@Override
 	public boolean canPullUp()
 	{
-		return true;
+		return  pullableConfig.canUserPullUp();
 	}
 
 }
