@@ -34,7 +34,7 @@ Nstd 补充说明：
 ##引用
 ###Gradle
 ``` gradle
-compile 'com.jingchen:pulltorefreshandload:3.1@aar'
+compile 'com.jingchen:pulltorefreshandload:3.1.4@aar'
 ```
 
 ##说明
