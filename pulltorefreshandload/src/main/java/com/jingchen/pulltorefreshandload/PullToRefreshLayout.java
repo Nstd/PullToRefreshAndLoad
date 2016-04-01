@@ -154,7 +154,7 @@ public class PullToRefreshLayout extends RelativeLayout
 				timer.cancel();
 				requestLayout();
 			}
-			Log.d("handle", "handle");
+//			Log.d("handle", "handle");
 			// 刷新布局,会自动调用onLayout
 			requestLayout();
 			// 没有拖拉或者回弹完成
@@ -656,7 +656,7 @@ public class PullToRefreshLayout extends RelativeLayout
 					childLeft + refreshView.getMeasuredWidth(),
 					(int) (pullDownY + pullUpY));
 		} else {
-			Log.e(TAG, "no headView");
+//			Log.e(TAG, "no headView");
 		}
 
 		if(containerView != null) {
@@ -686,7 +686,7 @@ public class PullToRefreshLayout extends RelativeLayout
 					childLeft + pullableView.getMeasuredWidth(),
 					childTop + (int) (pullDownY + pullUpY) + pullableView.getMeasuredHeight());
 		} else {
-			Log.e(TAG, "no pullableView");
+//			Log.e(TAG, "no pullableView");
 		}
 
 
@@ -701,7 +701,7 @@ public class PullToRefreshLayout extends RelativeLayout
 					(int) (pullDownY + pullUpY) + cView.getMeasuredHeight() + pullableMarginBottom
 							+ loadmoreView.getMeasuredHeight());
 		} else {
-			Log.e(TAG, "no footerView");
+//			Log.e(TAG, "no footerView");
 		}
 	}
 
