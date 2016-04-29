@@ -30,6 +30,8 @@ Nstd 补充说明：
 ![TextView](https://github.com/Nstd/PullToRefreshAndLoad/blob/master/screenshots/TextView.gif)
 ###ListView With Container
 ![ListView With Container](https://github.com/Nstd/PullToRefreshAndLoad/blob/master/screenshots/ListViewWithContainer.gif)
+###RecycleView
+![RecycleView](https://github.com/Nstd/PullToRefreshAndLoad/blob/master/screenshots/RecycleView.gif)
 
 ##引用
 ###Gradle
@@ -113,6 +115,7 @@ compile 'com.jingchen:pulltorefreshandload:3.1.4@aar'
     PullableScrollView
     PullableTextView
     PullableWebView
+    PullableRecycleView
     ```
 
  4. header view 状态改变接口说明(footer view类似)
@@ -164,6 +167,10 @@ compile 'com.jingchen:pulltorefreshandload:3.1.4@aar'
            对应的layout是：pull_to_refresh_footer
 
 - 更新说明
+### v3.2.0
+    增加了PullableRecycleView
+### v3.1.5
+    移除了一些debug log
 ### v3.1.4
     1. xml中增加autoDetect(boolean, default:true)、hasHeader(boolean, deafult:false)、hasFooter(boolean, default:false)属性
         autoDetect默认为true，可以自动侦测[Header]-PullableView-[Footer]结构的布局

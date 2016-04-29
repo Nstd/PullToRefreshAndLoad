@@ -37,6 +37,12 @@
         </activity>
         <activity android:name="com.jingchen.pulltorefresh.activity.PullableTextViewActivity" >
         </activity>
+        <activity android:name="com.jingchen.pulltorefresh.activity.PullableRecycleViewLinearActivity" >
+        </activity>
+        <activity android:name="com.jingchen.pulltorefresh.activity.PullableRecycleViewGridActivity" >
+        </activity>
+        <activity android:name="com.jingchen.pulltorefresh.activity.PullableRecycleViewStaggeredGridActivity" >
+        </activity>
     </application>
 
 </manifest>
