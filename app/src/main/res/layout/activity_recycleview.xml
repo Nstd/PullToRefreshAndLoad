@@ -1,18 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.jingchen.pulltorefreshandload.DefaultPullToRefreshLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/refresh_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/pull_to_refresh_footer" />
-    <!-- 支持所有实现Pullable接口的View -->
-
-    <com.jingchen.pulltorefreshandload.pullableview.PullableRecycleView
-        android:id="@+id/content_view"
+    <com.jingchen.pulltorefreshandload.DefaultPullToRefreshLayout
+        android:id="@+id/refresh_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
 
-    <include layout="@layout/pull_to_refresh_header" />
+        <include layout="@layout/pull_to_refresh_footer" />
+        <!-- 支持所有实现Pullable接口的View -->
 
-</com.jingchen.pulltorefreshandload.DefaultPullToRefreshLayout>
+        <com.jingchen.pulltorefreshandload.pullableview.PullableRecycleView
+            android:id="@+id/content_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <include layout="@layout/pull_to_refresh_header" />
+
+    </com.jingchen.pulltorefreshandload.DefaultPullToRefreshLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal"
+        android:padding="10dp"
+        android:text="这是bottom"
+        android:background="#ff0000"/>
+</RelativeLayout>

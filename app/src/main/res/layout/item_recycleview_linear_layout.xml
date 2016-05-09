@@ -8,6 +8,12 @@
         android:id="@+id/item_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        tools:text="121231231"/>
+        android:paddingTop="300dp"
+        android:paddingBottom="300dp"
+        tools:text="121231231"
+        android:background="#c1696969"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="#fafafa"/>
 </LinearLayout>

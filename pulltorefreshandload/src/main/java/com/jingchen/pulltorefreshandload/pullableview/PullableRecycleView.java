@@ -95,20 +95,20 @@ public class PullableRecycleView extends RecyclerView implements Pullable
                 int pHeight = getMeasuredHeight();
                 int lastPosition;
                 if(lm instanceof  LinearLayoutManager) {
-                    lastPosition = ((LinearLayoutManager) lm).findLastCompletelyVisibleItemPosition();
+                    lastPosition = ((LinearLayoutManager) lm).findLastVisibleItemPosition();
                     if(lastPosition == count) {
                         View child = lm.getChildAt(lastPosition - ((LinearLayoutManager) lm).findFirstVisibleItemPosition());
                         return child != null && child.getBottom() <= pHeight;
                     }
                 } else if(lm instanceof GridLayoutManager) {
-                    lastPosition = ((GridLayoutManager) lm).findLastCompletelyVisibleItemPosition();
+                    lastPosition = ((GridLayoutManager) lm).findLastVisibleItemPosition();
                     if(lastPosition == count) {
                         View child = lm.getChildAt(lastPosition - ((GridLayoutManager) lm).findFirstVisibleItemPosition());
                         return child != null && child.getBottom() <= pHeight;
                     }
                 } else if(lm instanceof StaggeredGridLayoutManager) {
                     int[] pFirst= ((StaggeredGridLayoutManager) lm).findFirstVisibleItemPositions(null);
-                    int[] pLast = ((StaggeredGridLayoutManager) lm).findLastCompletelyVisibleItemPositions(null);
+                    int[] pLast = ((StaggeredGridLayoutManager) lm).findLastVisibleItemPositions(null);
                     boolean isLastRow = false;
                     boolean isAllCanSee = true;
                     if(pLast != null && pLast.length > 0 && pFirst != null && pFirst.length > 0) {
