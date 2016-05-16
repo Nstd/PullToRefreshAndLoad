@@ -36,7 +36,7 @@ Nstd 补充说明：
 ##引用
 ###Gradle
 ``` gradle
-compile 'com.jingchen:pulltorefreshandload:3.1.4@aar'
+compile 'com.jingchen:pulltorefreshandload:3.2.1@aar'
 ```
 
 ##说明
@@ -167,6 +167,8 @@ compile 'com.jingchen:pulltorefreshandload:3.1.4@aar'
            对应的layout是：pull_to_refresh_footer
 
 - 更新说明
+### v3.2.1
+    修复PullableRecycleView中最后一个item高度超过一屏（超出显示区域）导致的不能上拉的bug
 ### v3.2.0
     增加了PullableRecycleView
 ### v3.1.5
