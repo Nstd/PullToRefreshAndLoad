@@ -102,6 +102,8 @@ public class PullToRefreshLayout extends RelativeLayout
 	private boolean hasHeader;
 	private boolean hasFooter;
 
+	private OnMoveListener onMoveListener;
+
 	/**
 	 * 执行自动回滚的handler
 	 */
@@ -183,6 +185,10 @@ public class PullToRefreshLayout extends RelativeLayout
 
 	public void setOnLoadMoreViewStatusChangedListener(OnLoadMoreViewStatusChangedListener listener) {
 		mLoadMoreViewChangedListener = listener;
+	}
+
+	public void setOnMoveListener(OnMoveListener onMoveListener) {
+		this.onMoveListener = onMoveListener;
 	}
 
 	public PullToRefreshLayout(Context context)
@@ -369,6 +375,9 @@ public class PullToRefreshLayout extends RelativeLayout
 			timer.cancel();
 			mEvents = 0;
 			releasePull();
+			if(onMoveListener != null) {
+				onMoveListener.begin();
+			}
 			break;
 		case MotionEvent.ACTION_POINTER_DOWN:
 		case MotionEvent.ACTION_POINTER_UP:
@@ -424,8 +433,12 @@ public class PullToRefreshLayout extends RelativeLayout
 			// 根据下拉距离改变比例
 			radio = (float) (2 + 2 * Math.tan(Math.PI / 2 / getMeasuredHeight()
 					* (pullDownY + Math.abs(pullUpY))));
-			if (pullDownY > 0 || pullUpY < 0)
+			if (pullDownY > 0 || pullUpY < 0) {
+				if(onMoveListener != null) {
+					onMoveListener.move(pullDownY > 0 ? pullDownY : pullUpY);
+				}
 				requestLayout();
+			}
 			if (pullDownY > 0)
 			{
 				if (pullDownY <= refreshDist
@@ -480,6 +493,9 @@ public class PullToRefreshLayout extends RelativeLayout
 				// 加载操作
 				if (mListener != null)
 					mListener.onLoadMore(this);
+			}
+			if(onMoveListener != null) {
+				onMoveListener.stop();
 			}
 			hide();
 		default:
@@ -875,5 +891,26 @@ public class PullToRefreshLayout extends RelativeLayout
 		 * 没有更多数据了
 		 */
 		void onNoMoreData(PullToRefreshLayout pullToRefreshLayout);
+	}
+
+	/**
+	 * 滑动反馈接口
+	 */
+	public interface OnMoveListener{
+		/**
+		 * 开始滑动
+		 */
+		void begin();
+
+		/**
+		 * 活动中
+		 * @param y 垂直滑动距离
+         */
+		void move(float y);
+
+		/**
+		 * 滑动结束
+		 */
+		void stop();
 	}
 }

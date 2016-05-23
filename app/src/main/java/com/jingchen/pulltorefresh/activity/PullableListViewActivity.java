@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -27,6 +28,7 @@ import com.jingchen.pulltorefreshandload.pullableview.PullableListView;
 
 public class PullableListViewActivity extends Activity
 {
+	private final String TAG = "PullableListView";
 	private ListView listView;
 	private PullToRefreshLayout ptrl;
 	private boolean isFirstIn = true;
@@ -63,6 +65,24 @@ public class PullableListViewActivity extends Activity
 			}
 		});
 		initListView();
+
+		ptrl.setOnMoveListener(new PullToRefreshLayout.OnMoveListener() {
+			@Override
+			public void begin() {
+				Log.e(TAG, "begin pull");
+			}
+
+			@Override
+			public void move(float y) {
+				Log.e(TAG, "pull y=" + y);
+
+			}
+
+			@Override
+			public void stop() {
+				Log.e(TAG, "stop pull");
+			}
+		});
 	}
 
 	@Override

@@ -36,9 +36,26 @@ Nstd 补充说明：
 ##引用
 ###Gradle
 ``` gradle
-compile 'com.jingchen:pulltorefreshandload:3.2.1@aar'
+compile 'com.jingchen:pulltorefreshandload:3.2.2@aar'
 ```
 
+## 更新说明
+### v3.2.2
+    增加了一个onMoveListener接口，在下拉头部或者上拉尾部的时候，可以获取到滑动距离，借此可以在Header或者Footer里执行一些视差动画
+### v3.2.1
+    修复PullableRecycleView中最后一个item高度超过一屏（超出显示区域）导致的不能上拉的bug
+### v3.2.0
+    增加了PullableRecycleView
+### v3.1.5
+    移除了一些debug log
+### v3.1.4
+    1. xml中增加autoDetect(boolean, default:true)、hasHeader(boolean, deafult:false)、hasFooter(boolean, default:false)属性
+        autoDetect默认为true，可以自动侦测[Header]-PullableView-[Footer]结构的布局
+        如果autoDetect=false，需要设置hasHeader、hasFooter属性，来指明是否有刷新头部以及尾部，同时还能添加形如以下的结构：
+        [Header]-{Container(LinearLayout、Relativelayout...){PullableView(必须是第一个孩子节点)-[OtherView]}}-[Footer]
+    2. 所有默认的PullableView中添加pullableConfig属性，可以手动设置是否可以上下拉
+    
+    
 ##说明
 - 布局结构
 ``` structure
@@ -166,20 +183,7 @@ compile 'com.jingchen:pulltorefreshandload:3.2.1@aar'
         3. DefaultLoadMoreViewHelper实现了一个默认的上拉样式
            对应的layout是：pull_to_refresh_footer
 
-- 更新说明
-### v3.2.1
-    修复PullableRecycleView中最后一个item高度超过一屏（超出显示区域）导致的不能上拉的bug
-### v3.2.0
-    增加了PullableRecycleView
-### v3.1.5
-    移除了一些debug log
-### v3.1.4
-    1. xml中增加autoDetect(boolean, default:true)、hasHeader(boolean, deafult:false)、hasFooter(boolean, default:false)属性
-        autoDetect默认为true，可以自动侦测[Header]-PullableView-[Footer]结构的布局
-        如果autoDetect=false，需要设置hasHeader、hasFooter属性，来指明是否有刷新头部以及尾部，同时还能添加形如以下的结构：
-        [Header]-{Container(LinearLayout、Relativelayout...){PullableView(必须是第一个孩子节点)-[OtherView]}}-[Footer]
-    2. 所有默认的PullableView中添加pullableConfig属性，可以手动设置是否可以上下拉
-    
+
 ##用法
 ### XML(auto detect header and footer)
 ``` xml
