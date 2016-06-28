@@ -40,6 +40,8 @@ compile 'com.jingchen:pulltorefreshandload:3.2.2@aar'
 ```
 
 ## 更新说明
+### v3.2.3
+    修复因为Timer未及时释放导致的内存泄露
 ### v3.2.2
     增加了一个onMoveListener接口，在下拉头部或者上拉尾部的时候，可以获取到滑动距离，借此可以在Header或者Footer里执行一些视差动画
 ### v3.2.1
